@@ -1,4 +1,5 @@
 const { ApolloServer, gql } = require("apollo-server");
+const mongoose = require("mongoose");
 
 let racers = [
   {
@@ -80,7 +81,14 @@ const resolvers = {
 
 const server = new ApolloServer({ typeDefs, resolvers });
 
-server.listen({ port: 5000 }).then((res) => console.log(res.url));
+mongoose
+  .connect("mongodb://localhost:27017/fzero", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => server.listen({ port: 5000 }))
+  .then((res) => console.log(res.url))
+  .catch((err) => console.log(err));
 
 //notes:
 
