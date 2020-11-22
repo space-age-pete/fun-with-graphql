@@ -2,30 +2,6 @@ import React, { useRef, useState } from "react";
 import { gql, useQuery, useMutation } from "@apollo/client";
 import "./index.css";
 
-// const styles = {
-//   box: {
-//     border: "thin solid blue",
-//     margin: "10px",
-//     // maxWidth: "30%",
-//     minWidth: "250px",
-//     textAlign: "center",
-//     hover: {
-//       backgroundColor: "red",
-//     },
-//   },
-//   wrapper: {
-//     display: "flex",
-//     flexWrap: "wrap",
-//   },
-//   label: {
-//     display: "block",
-//     margin: "5px",
-//   },
-//   form: {
-//     padding: "5px",
-//   },
-// };
-
 function App() {
   const nameRef = useRef(null);
   const carRef = useRef(null);
@@ -62,8 +38,6 @@ function App() {
     DELETE_RACER_MUTATION,
     {}
   );
-
-  console.log(data);
 
   const kill = (id) => {
     // let id = event.target.dataset.id;
