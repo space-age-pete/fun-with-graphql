@@ -63,6 +63,8 @@ function App() {
     {}
   );
 
+  console.log(data);
+
   const kill = (id) => {
     // let id = event.target.dataset.id;
     console.log(typeof id);
@@ -105,9 +107,7 @@ function App() {
                 data-id={id}
                 onClick={(e) => winRace({ variables: { id } })}
               >
-                <h2>
-                  {id}. {name}
-                </h2>
+                <h2>{name}</h2>
                 <h4>drives the {car}</h4>
                 {/* {wins > 0 && <p>and has won races</p>} */}
                 {/* {typeof wins} */}

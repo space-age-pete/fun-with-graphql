@@ -1,0 +1,14 @@
+winRace: (_, { id }) => {
+      let index = racers.findIndex((racer) => racer.id == id);
+
+      // let index = racers.findIndex((racer) => racer.id === +id);
+      //kind of whack that ID starts as a number, then turns into a string
+      //then I gotta turn it back into a number?
+      //learn more about ID! stuff I guess
+
+      console.log(racers);
+      racers[index].wins++;
+      return racers[index];
+
+      //include no-match case later
+    },

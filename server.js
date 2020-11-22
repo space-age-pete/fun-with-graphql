@@ -1,6 +1,9 @@
 const { ApolloServer, gql } = require("apollo-server");
 const mongoose = require("mongoose");
 
+const { Racer } = require("./models");
+const { db } = require("./models/Racer");
+
 let racers = [
   {
     name: "Captain Falcon",
@@ -44,7 +47,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    racers: () => racers,
+    racers: async () => await Racer.find({}),
     games: (_, { name }) =>
       games.filter((game) =>
         game.name.toLowerCase().includes(name.toLowerCase())
@@ -52,28 +55,35 @@ const resolvers = {
   },
 
   Mutation: {
-    registerRacer: (_, body) => {
-      body.id = racers.length + 1;
-      body.wins = 0;
-      racers.push(body);
-      return body;
+    registerRacer: async (_, body) => {
+      // body.id = racers.length + 1;
+      // body.wins = 0;
+      // racers.push(body);
+      // return body;
+
+      const dbRacer = await Racer.create(body);
+      console.log(dbRacer);
+      return dbRacer;
+
+      //needs error handling
     },
-    winRace: (_, { id }) => {
-      let index = racers.findIndex((racer) => racer.id == id);
-
-      // let index = racers.findIndex((racer) => racer.id === +id);
-      //kind of whack that ID starts as a number, then turns into a string
-      //then I gotta turn it back into a number?
-      //learn more about ID! stuff I guess
-
-      console.log(racers);
-      racers[index].wins++;
-      return racers[index];
-
+    winRace: async (_, { id }) => {
       //include no-match case later
+
+      const dbRacer = await Racer.findById(id);
+      dbRacer.wins++;
+      dbRacer.save();
+      return dbRacer;
+
+      //possible to do this with findByIdAndUpdate() ?
     },
-    killRacer: (_, { id }) => {
-      racers = racers.filter((racer) => racer.id != id);
+    killRacer: async (_, { id }) => {
+      // racers = racers.filter((racer) => racer.id != id);
+      // return "A racer has died because of you";
+
+      const dbRacer = await Racer.findByIdAndDelete(id);
+      console.log(dbRacer);
+      //has access to racer and id
       return "A racer has died because of you";
     },
   },
