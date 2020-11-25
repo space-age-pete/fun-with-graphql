@@ -1,6 +1,12 @@
 import React, { useRef, useState } from "react";
-import { gql, useQuery, useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import "./index.css";
+import {
+  DELETE_RACER_MUTATION,
+  FETCH_RACERS_QUERY,
+  INCREMENT_RACER_WINS_MUTATION,
+  REGISTER_RACER_MUTATION,
+} from "./utils/graphql";
 //please branch
 
 function App() {
@@ -51,7 +57,7 @@ function App() {
         cache.writeQuery({
           query: FETCH_RACERS_QUERY,
           data: {
-            racers: existingRacers.racers.filter((racer) => racer.id != id),
+            racers: existingRacers.racers.filter((racer) => racer.id !== id),
           },
         });
       },
@@ -128,42 +134,3 @@ function App() {
 }
 
 export default App;
-
-const FETCH_RACERS_QUERY = gql`
-  query {
-    racers {
-      name
-      car
-      id
-      wins
-    }
-  }
-`;
-
-const REGISTER_RACER_MUTATION = gql`
-  mutation makeRacer($name: String!, $car: String!) {
-    registerRacer(name: $name, car: $car) {
-      id
-      name
-      car
-      wins
-    }
-  }
-`;
-
-const INCREMENT_RACER_WINS_MUTATION = gql`
-  mutation winRace($id: ID!) {
-    winRace(id: $id) {
-      id
-      name
-      car
-      wins
-    }
-  }
-`;
-
-const DELETE_RACER_MUTATION = gql`
-  mutation killRacer($id: ID!) {
-    killRacer(id: $id)
-  }
-`;

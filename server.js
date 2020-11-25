@@ -20,3 +20,12 @@ mongoose
 //like when it's need vs not
 
 //how to stop optional fields from returning null
+
+//TODOs (GENERAL)
+//validation/error handling
+//subscriptions
+//tailwind prolly
+//multiple pages?
+//separating junk into files
+//games
+// make nodemon run both or at least ignore client
